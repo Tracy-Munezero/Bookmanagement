@@ -1,5 +1,7 @@
+import 'package:bookapp/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
       ),
-      home: const BookManager(),
+      home: const LoginScreen(),
     );
   }
 }
@@ -176,11 +178,11 @@ class _BookManagerState extends State<BookManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 209, 231, 249),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         title: const Text('Book Management System'),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 137, 206, 228),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         titleTextStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -249,7 +251,7 @@ class _BookManagerState extends State<BookManager> {
                             vertical: 4.0, horizontal: 12),
                         child: Slidable(
                           key: ValueKey(book.title),
-                          endActionPane: ActionPane(
+                          startActionPane: ActionPane(
                             motion: const DrawerMotion(),
                             children: [
                               SlidableAction(
@@ -292,6 +294,7 @@ class _BookManagerState extends State<BookManager> {
                     },
                   ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -318,7 +321,7 @@ class CustomTextField extends StatelessWidget {
           labelText: labelText,
           labelStyle: const TextStyle(color: Colors.black),
           filled: true,
-          fillColor: const Color.fromARGB(255, 141, 172, 193),
+          fillColor: const Color.fromARGB(255, 201, 221, 234),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide.none,
