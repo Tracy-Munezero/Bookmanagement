@@ -1,6 +1,10 @@
+import 'package:bookapp/local_storage.dart';
+// ignore: unused_import
 import 'package:bookapp/main.dart';
 import 'package:bookapp/signup.dart';
 import 'package:flutter/material.dart';
+
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: const Color.fromARGB(255, 179, 217, 236),
-      ),
+      
       home: const LoginScreen(),
     );
   }
@@ -31,6 +32,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool rememberMe = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +57,21 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
 
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: "Email",
                   labelStyle: const TextStyle(color: Colors.black54),
                   prefixIcon: const Icon(Icons.person_outline),
                   hintText: "Enter your email",
                   border: const UnderlineInputBorder(),
+
+                  
                 ),
               ),
               const SizedBox(height: 20),
 
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Password",
@@ -111,6 +118,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
+                    // StorageManager.getData('user',{
+                    //   'email': _emailController.text,
+                    //   'password': _passwordController.text,
+                    // });
+                    // if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     const SnackBar(content: Text("Please fill in all fields")),
+                    //   );
+                    //   return;
+                    // }
+                    
                     Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const BookManager()),

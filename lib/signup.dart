@@ -1,3 +1,4 @@
+import 'package:bookapp/local_storage.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -34,50 +35,51 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 40),
 
-              // Name
+             
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(
                   labelText: "Name",
                   hintText: "Please enter your name",
-                  labelStyle: const TextStyle(color: Colors.black54),
+                  labelStyle: TextStyle(color: Colors.black54),
                   border: UnderlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Email
+              
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "Please enter your email address",
-                  labelStyle: const TextStyle(color: Colors.black54),
+                  labelStyle: TextStyle(color: Colors.black54),
                   border: UnderlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Password
+             
               TextField(
                 controller: _passwordController,
                 obscureText: true,
+                obscuringCharacter: '*',
                 decoration: const InputDecoration(
                   labelText: "Password",
                   hintText: "Enter password",
-                  labelStyle: const TextStyle(color: Colors.black54),
+                  labelStyle: TextStyle(color: Colors.black54),
                   border: UnderlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Confirm Password
               TextField(
                 controller: _confirmPasswordController,
                 obscureText: true,
+                obscuringCharacter: '1',
                 decoration: const InputDecoration(
-                  labelStyle: const TextStyle(color: Colors.black54),
+                  labelStyle: TextStyle(color: Colors.black54),
                   labelText: "Confirm password",
                   hintText: "Retype your password",
                   border: UnderlineInputBorder(),
@@ -85,12 +87,47 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 30),
 
-              // Signup Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                  //final storage= StorageManager();
+                 final isRegistered= StorageManager.saveData('user', {
+                    'name': _nameController.text,
+                    'email': _emailController.text,
+                    'password': _passwordController.text,
+                  });
+                  if(_emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty || _nameController.text.isEmpty){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please fill in all fields")),
+                    );
+                    return;
+                  }
+                  if(_passwordController.text != _confirmPasswordController.text){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Passwords do not match")),
+                    );
+                    return;
+                  }
+                  if(!_emailController.text.contains('@') || !_emailController.text.contains('.')){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please enter a valid email address")),
+                    );
+                    return;
+                  }
+                  if(isRegistered==true){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Registration Successful!"))
+                    );
+                    Navigator.pop(context); 
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Registration Failed!"))
+                    );
+            
+          }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade200,
                     shape: RoundedRectangleBorder(
@@ -106,14 +143,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
               const SizedBox(height: 30),
 
-              // Already have account link
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Already have an account? "),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context); // Back to login
+                      Navigator.pop(context); 
                     },
                     child: Text(
                       "Login",
