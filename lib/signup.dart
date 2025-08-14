@@ -77,7 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
               TextField(
                 controller: _confirmPasswordController,
                 obscureText: true,
-                obscuringCharacter: '1',
+                obscuringCharacter: '*',
                 decoration: const InputDecoration(
                   labelStyle: TextStyle(color: Colors.black54),
                   labelText: "Confirm password",
@@ -92,13 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                  //final storage= StorageManager();
-                 final isRegistered= StorageManager.saveData('user', {
-                    'name': _nameController.text,
-                    'email': _emailController.text,
-                    'password': _passwordController.text,
-                  });
-                  if(_emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty || _nameController.text.isEmpty){
+                    if(_emailController.text.isEmpty || _passwordController.text.isEmpty || _confirmPasswordController.text.isEmpty || _nameController.text.isEmpty){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please fill in all fields")),
                     );
@@ -116,7 +110,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     );
                     return;
                   }
-                  if(isRegistered==true){
+                  //final storage= StorageManager();
+                 final isRegistered= StorageManager.saveData('user', {
+                    'name': _nameController.text,
+                    'email': _emailController.text,
+                    'password': _passwordController.text,
+                  });
+                  
+                  if(isRegistered){
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Registration Successful!"))
                     );

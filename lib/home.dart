@@ -226,7 +226,7 @@ class _BookManagerState extends State<BookManager> {
                             vertical: 4.0, horizontal: 12),
                         child: Slidable(
                           key: ValueKey(book.title),
-                          startActionPane: ActionPane(
+                          endActionPane: ActionPane(
                             motion: const DrawerMotion(),
                             children: [
                               SlidableAction(

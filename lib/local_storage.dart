@@ -6,12 +6,10 @@ class StorageManager{
     _storage.write(key, value);
     return true;
 }
-static void getData() {
-   print(_storage.read('user'));
+static dynamic getData(String key) {
+   return _storage.read('user');
 
   }
-  
-
   // static void deleteData(String key) {
   //   _storage.remove(key);
   // }

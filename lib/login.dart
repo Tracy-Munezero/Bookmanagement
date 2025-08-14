@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'package:bookapp/local_storage.dart';
 // ignore: unused_import
 import 'package:bookapp/main.dart';
@@ -6,22 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 
-void main() {
-  runApp(const MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      
-      home: const LoginScreen(),
-    );
-  }
-}
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -117,7 +103,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+
+                    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                     ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please fill in all fields")),
+                    );
+                    return;
+                  }
                     // StorageManager.getData('user',{
                     //   'email': _emailController.text,
                     //   'password': _passwordController.text,
@@ -129,10 +122,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   return;
                     // }
                     
-                    Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const BookManager()),
-                  );
+                    final storedUser = await StorageManager.getData('user');
+                      if (storedUser != null &&
+                          storedUser['email'] == _emailController.text &&
+                          storedUser['password'] == _passwordController.text) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const BookManager()),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Invalid email or password")),
+                        );
+                      }
                   },
                  
                   style: ElevatedButton.styleFrom(
