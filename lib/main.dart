@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 // ignore: unused_import
 import 'home.dart';
 import 'login.dart';
+import 'add_Screen.dart';
 
 void main() async{
    await GetStorage.init();
