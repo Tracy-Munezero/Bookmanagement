@@ -59,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
+                obscuringCharacter: '*',
                 decoration: InputDecoration(
                   labelText: "Password",
                   labelStyle: const TextStyle(color: Colors.black54),
@@ -67,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: const UnderlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 10),
-
-             
+              const SizedBox(height: 10),             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -103,39 +102,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () async {
-
-                    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-                     ScaffoldMessenger.of(context).showSnackBar(
+                  onPressed: () {
+                  if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please fill in all fields")),
                     );
                     return;
                   }
-                    // StorageManager.getData('user',{
-                    //   'email': _emailController.text,
-                    //   'password': _passwordController.text,
-                    // });
-                    // if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(content: Text("Please fill in all fields")),
-                    //   );
-                    //   return;
-                    // }
-                    
-                    final storedUser = await StorageManager.getData('user');
-                      if (storedUser != null &&
-                          storedUser['email'] == _emailController.text &&
-                          storedUser['password'] == _passwordController.text) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const BookManager()),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Invalid email or password")),
-                        );
-                      }
-                  },
+
+                  final users = StorageManager.getUsers();
+                  final storedUser = users.firstWhere(
+                    (user) => user['email'] == _emailController.text && user['password'] == _passwordController.text,
+                    orElse: () => null,
+                  );
+
+                  if (storedUser != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Login successful")),
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BookManager()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Invalid email or password")),
+                    );
+                  }
+                },
+
                  
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade200,
@@ -151,9 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30),
-
-              
+              const SizedBox(height: 30),              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

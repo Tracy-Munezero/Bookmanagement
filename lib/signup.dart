@@ -111,7 +111,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     return;
                   }
                   //final storage= StorageManager();
-                 final isRegistered= StorageManager.saveData('user', {
+                  final isRegistered = StorageManager.saveUser({
                     'name': _nameController.text,
                     'email': _emailController.text,
                     'password': _passwordController.text,

@@ -57,7 +57,7 @@ class _BookManagerState extends State<BookManager> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color.fromARGB(255, 209, 231, 249),
+        backgroundColor: Colors.white,
         title: const Text('Edit Book'),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -271,7 +271,7 @@ class _BookManagerState extends State<BookManager> {
             MaterialPageRoute(builder: (context) => const LoginScreen()),
           );
         },
-        child: const Icon(Icons.logout, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
