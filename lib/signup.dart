@@ -1,4 +1,5 @@
 import 'package:bookapp/local_storage.dart';
+import 'package:bookapp/login.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -34,59 +35,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
               const SizedBox(height: 40),
-
              
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: "Name",
-                  hintText: "Please enter your name",
-                  labelStyle: TextStyle(color: Colors.black54),
-                  border: UnderlineInputBorder(),
-                ),
-              ),
+             CustomTextField(controller: _nameController, labelText: "Name", hintText: "Please enter your name"),
               const SizedBox(height: 20),
-
-              
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  hintText: "Please enter your email address",
-                  labelStyle: TextStyle(color: Colors.black54),
-                  border: UnderlineInputBorder(),
-                ),
-              ),
+            CustomTextField(controller: _emailController, labelText: "Email", hintText: "Please enter your email address"),
               const SizedBox(height: 20),
-
-             
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                obscuringCharacter: '*',
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  hintText: "Enter password",
-                  labelStyle: TextStyle(color: Colors.black54),
-                  border: UnderlineInputBorder(),
-                ),
-              ),
+            CustomTextField(controller: _passwordController, labelText: "Password", hintText: "Please enter your password", obscureText: true,),
               const SizedBox(height: 20),
-
-              TextField(
-                controller: _confirmPasswordController,
-                obscureText: true,
-                obscuringCharacter: '*',
-                decoration: const InputDecoration(
-                  labelStyle: TextStyle(color: Colors.black54),
-                  labelText: "Confirm password",
-                  hintText: "Retype your password",
-                  border: UnderlineInputBorder(),
-                ),
-              ),
+            CustomTextField(controller: _confirmPasswordController, labelText: "Confirm password", hintText: "Retype your password", obscureText: true,),
               const SizedBox(height: 30),
 
+              
               SizedBox(
                 width: double.infinity,
                 height: 50,

@@ -1,4 +1,6 @@
 // ignore: unused_import
+import 'dart:ffi';
+
 import 'package:bookapp/local_storage.dart';
 // ignore: unused_import
 import 'package:bookapp/main.dart';
@@ -42,32 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 40),
 
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  labelStyle: const TextStyle(color: Colors.black54),
-                  prefixIcon: const Icon(Icons.person_outline),
-                  hintText: "Enter your email",
-                  border: const UnderlineInputBorder(),
-
-                  
-                ),
-              ),
+              CustomTextField(controller: _emailController,labelText: "Email",hintText: "Enter your email",prefixIcon: Icon(Icons.person_outline),),
               const SizedBox(height: 20),
 
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                obscuringCharacter: '*',
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  labelStyle: const TextStyle(color: Colors.black54),
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  hintText: "Password",
-                  border: const UnderlineInputBorder(),
-                ),
-              ),
+              CustomTextField(controller: _passwordController, labelText: "Password", hintText: "Enter your password",obscureText: true,prefixIcon: Icon(Icons.lock_outline),),
               const SizedBox(height: 10),             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,3 +153,30 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+class CustomTextField extends StatelessWidget {
+   CustomTextField({required this.controller ,required this.labelText,required this.hintText, this.obscureText=false,this.prefixIcon });
+ final String labelText;
+  final String hintText;
+  final Widget? prefixIcon;
+  
+  final TextEditingController controller;
+  final bool obscureText;
+  @override
+  Widget build(BuildContext context) {
+     return TextField(
+      obscureText: obscureText,
+      controller: controller,
+      decoration: InputDecoration(
+        labelText:labelText,
+        labelStyle: const TextStyle(color: Colors.black54),
+        prefixIcon: prefixIcon,
+        hintText: hintText,
+        border: const UnderlineInputBorder(),
+        
+      ),
+    );
+  }
+}
+

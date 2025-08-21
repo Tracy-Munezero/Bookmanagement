@@ -1,14 +1,20 @@
 import 'package:bookapp/home.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class Book {
   final String title;
   final String author;
+  final String type;
+  final File image;
   final Color color;
 
   Book({
     required this.title,
     required this.author,
+    required this.type,
+    required this.image,
     required this.color,
   });
 }
@@ -23,166 +29,240 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _authorController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
+  File? _selectedImage;
   final List<Book> books = [];
   Color? _selectedColor;
+  final List<Color> _availableColors = [
+  const Color(0xffE7B3B3),
+  const Color(0xff91B6CD),
+  const Color(0xff8D8CB3),
+  const Color(0xffE6C9DD),
+  const Color(0xffEAE5CF),
+  const Color(0xffC3E8C5),
+  const Color(0xff97B7C5),
 
-  final List<Color> colorOptions = [
-    const Color.fromARGB(255, 143, 82, 82),
-    const Color.fromARGB(255, 180, 220, 220),
-    const Color.fromARGB(255, 51, 143, 120),
-    const Color.fromARGB(255, 59, 178, 120),
-    const Color.fromARGB(255, 216, 182, 182),
-  ];
+];
+  
 
-  void _addBook() {
-    final title = _titleController.text.trim();
-    final author = _authorController.text.trim();
-
-    if (title.isNotEmpty && author.isNotEmpty && _selectedColor != null) {
-      setState(() {
-        books.add(Book(title: title, author: author, color: _selectedColor!));
-        _titleController.clear();
-        _authorController.clear();
-        _selectedColor = null;
-      });
-    }
-  }
-
-  Widget _buildColorSelector() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: colorOptions.map((color) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                _selectedColor = color;
-              });
-            },
-            child: Card(
-              color: color,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: _selectedColor == color
-                      ? Colors.black
-                      : Colors.transparent,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const SizedBox(width: 60, height: 60),
-            ),
-          );
-        }).toList(),
+ void _saveBook() {
+  if (_titleController.text.isEmpty ||
+      _authorController.text.isEmpty ||
+      _typeController.text.isEmpty ||
+      _selectedImage == null ||
+      _selectedColor == null) { 
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Please fill all fields, upload a photo, and select a color"),
       ),
     );
+    return;
   }
+
+  Navigator.pushReplacement(context,
+   MaterialPageRoute(builder: (context) => const BookManager()));
+}
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
+        title: const Text('Add Book'),
         centerTitle: true,
         leading: IconButton(
-         icon: const Icon(Icons.arrow_back, color: Colors.black),
-         onPressed: () {
-           Navigator.pushReplacement(
-             context,
-             MaterialPageRoute(builder: (context) => const BookManager()),
-           );
-         }
-         ),
-        title: const Text(
-          'Add Book',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontFamily: 'poppins',
-          ),
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BookManager())),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(30.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                "A new book, a new adventure!",
+                style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
+              ),
+              const SizedBox(height: 4),
+              const Text(
+                "Add your book details",
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
+              const SizedBox(height: 30),
+
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                labelText: "Book Title",
+                labelStyle: TextStyle(color: Colors.black54),
+                border: UnderlineInputBorder(),
+                focusedBorder:  UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black54),
+                )
                 ),
-                CustomTextField(
-                  controller: _titleController,
-                  labelText: "Enter Book Title",
+              ),
+              const SizedBox(height: 15),
+              
+              TextField(
+                controller: _authorController,
+                decoration: const InputDecoration(
+                labelText: "Author",
+                labelStyle: TextStyle(color: Colors.black54),
+                border: UnderlineInputBorder(),
+                focusedBorder:  UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black54),
                 ),
-                CustomTextField(
-                  controller: _authorController,
-                  labelText: "Enter Author Name",
                 ),
-                _buildColorSelector(),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 137, 206, 228),
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                  ),
-                  onPressed: _addBook,
-                  child: const Text(
-                    'Add Book',
+              ),
+              const SizedBox(height: 15),
+
+              TextField(
+                controller: _typeController,
+                decoration: const InputDecoration(
+                labelText: "Book Type",
+                labelStyle: TextStyle(color: Colors.black54),
+                border: UnderlineInputBorder(),
+                focusedBorder:  UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black54),
+                ),  
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Upload Photo Cover:",
                     style: TextStyle(
-                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  UploadPhotoField(
+                    onImagePicked: (file) {
+                      _selectedImage = file;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Choose a Color:",
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _availableColors.map((color) {
+                      final bool isSelected = _selectedColor == color;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedColor = color;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(12),
+                          border: isSelected ? Border.all(color: Colors.black, width: 1) : null,
+                        ),
+                          width: 40,
+                          height: 40,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+
+             SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: _saveBook,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade200,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    "Save Book",
+                    style: TextStyle(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'poppins',
                       color: Colors.white,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              )
+            ],
           ),
-        ],
+        ),
       ),
-     
     );
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-    required this.controller,
-    required this.labelText,
-  });
+class UploadPhotoField extends StatefulWidget {
+  final void Function(File?) onImagePicked;
+  const UploadPhotoField({super.key, required this.onImagePicked});
 
-  final TextEditingController controller;
-  final String labelText;
+  @override
+  State<UploadPhotoField> createState() => _UploadPhotoFieldState();
+}
+
+class _UploadPhotoFieldState extends State<UploadPhotoField> {
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
+ Future<void> _pickImage() async {
+  try {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+      maxHeight: 600,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+      widget.onImagePicked(_imageFile);
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error picking image: $e")),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: const TextStyle(color: Colors.black),
-          filled: true,
-          fillColor: const Color.fromARGB(255, 201, 221, 234),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: BorderSide.none,
-          ),
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        height: 150,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12),
         ),
+        child: _imageFile == null
+            ? const Center(child: Text("Tap to upload photo"))
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.file(_imageFile!, fit: BoxFit.cover),
+              ),
       ),
     );
   }

@@ -11,10 +11,6 @@ class StorageManager{
   static List <dynamic> getUsers() {
     return _storage.read('users') ?? [];
   }
- 
-  
-
-
 //   static bool saveData(String key, Map value) {
 //     _storage.write(key, value);
 //     return true;
