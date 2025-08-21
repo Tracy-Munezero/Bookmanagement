@@ -30,21 +30,7 @@ class _BookManagerState extends State<BookManager> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(
-      //    'Book Manager'
-      //   ),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.white,
-      //   titleTextStyle: const TextStyle(
-      //     fontSize: 20,
-      //     fontWeight: FontWeight.bold,
-      //     color: Colors.black,
-      //     fontFamily: 'poppins',
-      //   ),
-        
-        
-      // ),
+    
       body: _pages[_selectedIndex],
 
      floatingActionButton: _selectedIndex == 0
