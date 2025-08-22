@@ -22,6 +22,11 @@ class StorageManager{
   static List<dynamic> getBooks(){
     return _storage.read('books') ?? [];
   }
+  static void deleteBook(String imagePath) {
+    List<dynamic> books = getBooks();
+    books.removeWhere((b) => b['imagePath'] == imagePath);
+    _storage.write('books', books);
+  }
 //   static bool saveData(String key, Map value) {
 //     _storage.write(key, value);
 //     return true;

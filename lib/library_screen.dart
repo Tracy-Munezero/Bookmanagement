@@ -70,7 +70,28 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final book = books[index];
-                        return Container(
+                       return Dismissible(
+                        key: Key(book['imagePath']),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: 20),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 230, 118, 110),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (direction) {
+                          setState(() {
+                            books.removeAt(index);
+                            StorageManager.deleteBook(book['imagePath']);
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('${book['title']} deleted')),
+                          );
+                        },
+                        child: Container(
                           decoration: BoxDecoration(
                             color: Color(book['color']),
                             borderRadius: BorderRadius.circular(10),
@@ -89,17 +110,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Flexible(
-                                child: Text(book['title'], maxLines: 2, overflow: TextOverflow.ellipsis),
-                              ),
-                              Flexible(
-                                child: Text(book['author'], maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.left,),
-                              ),
-                             
-                              
+                              Text(book['title'], maxLines: 2, overflow: TextOverflow.ellipsis),
+                              Text(book['author'], maxLines: 1, overflow: TextOverflow.ellipsis),
                             ],
                           ),
-                        );
+                        ),
+                      );
+
+                          
                       },
                     ),
             ),
