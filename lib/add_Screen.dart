@@ -1,4 +1,7 @@
+import 'package:bookapp/colors.dart';
 import 'package:bookapp/home.dart';
+import 'package:bookapp/library_screen.dart';
+import 'package:bookapp/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -58,6 +61,16 @@ class _AddScreenState extends State<AddScreen> {
     );
     return;
   }
+  final imagePath = _selectedImage!.path;
+  final colorValue = _selectedColor!.value;
+  final bookData ={
+    'title': _titleController.text,
+    'author':_authorController.text,
+    'type': _typeController.text,
+    'imagePath': imagePath,
+    'color': colorValue,
+  };
+  StorageManager.saveBook(bookData);
 
   Navigator.pushReplacement(context,
    MaterialPageRoute(builder: (context) => const BookManager()));
@@ -87,12 +100,12 @@ class _AddScreenState extends State<AddScreen> {
               const Text(
                 "A new book, a new adventure!",
                 style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54),
+                    fontSize: 16, fontWeight: FontWeight.bold, color: Appcolors.black),
               ),
               const SizedBox(height: 4),
               const Text(
                 "Add your book details",
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                style: TextStyle(fontSize: 14, color: Appcolors.black),
               ),
               const SizedBox(height: 30),
 
@@ -100,10 +113,10 @@ class _AddScreenState extends State<AddScreen> {
                 controller: _titleController,
                 decoration: const InputDecoration(
                 labelText: "Book Title",
-                labelStyle: TextStyle(color: Colors.black54),
+                labelStyle: TextStyle(color: Appcolors.black),
                 border: UnderlineInputBorder(),
                 focusedBorder:  UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black54),
+                borderSide: BorderSide(color: Appcolors.black),
                 )
                 ),
               ),
@@ -113,10 +126,10 @@ class _AddScreenState extends State<AddScreen> {
                 controller: _authorController,
                 decoration: const InputDecoration(
                 labelText: "Author",
-                labelStyle: TextStyle(color: Colors.black54),
+                labelStyle: TextStyle(color: Appcolors.black),
                 border: UnderlineInputBorder(),
                 focusedBorder:  UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black54),
+                borderSide: BorderSide(color: Appcolors.black),
                 ),
                 ),
               ),
@@ -126,10 +139,10 @@ class _AddScreenState extends State<AddScreen> {
                 controller: _typeController,
                 decoration: const InputDecoration(
                 labelText: "Book Type",
-                labelStyle: TextStyle(color: Colors.black54),
+                labelStyle: TextStyle(color:Appcolors.black),
                 border: UnderlineInputBorder(),
                 focusedBorder:  UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black54),
+                borderSide: BorderSide(color: Appcolors.black),
                 ),  
                 ),
               ),
@@ -191,7 +204,7 @@ class _AddScreenState extends State<AddScreen> {
                 child: ElevatedButton(
                   onPressed: _saveBook,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade200,
+                    backgroundColor: Appcolors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

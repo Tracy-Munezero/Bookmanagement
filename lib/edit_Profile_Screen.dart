@@ -1,5 +1,6 @@
 import 'package:bookapp/login.dart';
 import 'package:flutter/material.dart';
+import 'package:bookapp/colors.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -25,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: const Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.black54, fontSize: 17),
+          style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -47,7 +48,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
           const Text(
             'Username',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black54),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color:Appcolors.black),
           ),
           const SizedBox(height: 6),
           Row(
@@ -69,7 +70,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
           const Text(
             'Email',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500,color: Colors.black54 ),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color:Appcolors.black ),
           ),
           const SizedBox(height: 6),
           TextField(
@@ -85,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             height: 56,
             child: FilledButton(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.blue.shade200),
+                backgroundColor: WidgetStateProperty.all(Appcolors.primary),
                 shape: WidgetStateProperty.all(
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),

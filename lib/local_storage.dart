@@ -11,6 +11,17 @@ class StorageManager{
   static List <dynamic> getUsers() {
     return _storage.read('users') ?? [];
   }
+
+  static bool saveBook(Map<String, dynamic> book) {
+    List<dynamic> books = _storage.read('books') ?? [];
+    books.add(book);
+    _storage.write('books', books);
+    return true;
+  }
+
+  static List<dynamic> getBooks(){
+    return _storage.read('books') ?? [];
+  }
 //   static bool saveData(String key, Map value) {
 //     _storage.write(key, value);
 //     return true;
