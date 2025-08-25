@@ -95,7 +95,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
                         final String title = book['title'] ?? '';
                         final String author = book['author'] ?? '';
-                        final String type = book['type'] ?? '';
                         final String imagePath = book['imagePath'] ?? '';
                         final int colorValue = book['color'] ?? 0xFFFFFFFF;
 

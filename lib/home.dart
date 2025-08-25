@@ -1,4 +1,5 @@
 import 'package:bookapp/add_Screen.dart';
+import 'package:bookapp/colors.dart';
 import 'package:bookapp/edit_Profile_Screen.dart';
 import 'package:bookapp/library_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,38 +47,58 @@ class _BookManagerState extends State<BookManager> {
         : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined,  size: 30,),
-            label: '',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined,  size: 30,),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.folder_outlined,  size: 30,),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined,  size: 30,),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
-        
-        onTap: _onItemTapped,
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 8),
+          ],
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: Appcolors.black,
+          unselectedItemColor: Appcolors.darkBlack,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 0
+                  ? const Icon(Icons.home, size: 30)
+                  : const Icon(Icons.home_outlined, size: 30),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 1
+                  ? const Icon(Icons.search, size: 30)
+                  : const Icon(Icons.search_outlined, size: 30),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 2
+                  ? const Icon(Icons.folder, size: 30)
+                  : const Icon(Icons.folder_outlined, size: 30),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 3
+                  ? const Icon(Icons.person, size: 30)
+                  : const Icon(Icons.person_outline, size: 30),
+              label: '',
+            ),
+          ],
+        ),
       ),
-      
-      
     );
+      
+    
   }
 }
 

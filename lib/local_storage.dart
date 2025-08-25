@@ -39,6 +39,26 @@ class StorageManager{
 
       _storage.write('books', books);
     }
+
+    // Save a single current logged-in user
+  static bool saveCurrentUser(Map<String, dynamic> user) {
+    _storage.write('currentUser', user);
+    return true;
+  }
+
+  // Get the currently logged-in user
+  static Map<String, dynamic>? getCurrentUser() {
+    final user = _storage.read('currentUser');
+    if (user != null) {
+      return Map<String, dynamic>.from(user);
+    }
+    return null;
+  }
+
+  // Logout / remove current user
+  static void logoutCurrentUser() {
+    _storage.remove('currentUser');
+  }
   }
   
 //   static bool saveData(String key, Map value) {

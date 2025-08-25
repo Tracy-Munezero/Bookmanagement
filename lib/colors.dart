@@ -12,6 +12,7 @@ class Appcolors{
  static const Color beige = Color(0xffEAE5CF);
  static const Color mintGreen = Color(0xffC3E8C5);
  static const Color dustyBlue = Color(0xff97B7C5);
+ static const Color darkBlack = Color(0x85000000);
 
  static const List<Color> bookColors =[
   softRed,
