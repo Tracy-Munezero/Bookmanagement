@@ -1,3 +1,4 @@
+import 'package:bookapp/colors.dart';
 import 'package:bookapp/local_storage.dart';
 import 'package:bookapp/login.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 4),
               const Text(
                 "Create your account",
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                style: TextStyle(fontSize: 14, color: Appcolors.black),
               ),
               const SizedBox(height: 40),
              
@@ -89,14 +90,14 @@ class _SignupScreenState extends State<SignupScreen> {
           }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade200,
+                    backgroundColor: Appcolors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: const Text(
                     "Signup",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Appcolors.white),
                   ),
                 ),
               ),
@@ -113,7 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                     child: Text(
                       "Login",
-                      style: TextStyle(color: Colors.blue.shade300),
+                      style: TextStyle(color: Appcolors.primary),
                     ),
                   ),
                 ],

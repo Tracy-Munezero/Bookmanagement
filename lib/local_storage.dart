@@ -27,6 +27,20 @@ class StorageManager{
     books.removeWhere((b) => b['imagePath'] == imagePath);
     _storage.write('books', books);
   }
+  static void updateBook(Map<String, dynamic> updatedBook) {
+      List<dynamic> books = getBooks();
+
+      for (int i = 0; i < books.length; i++) {
+        if (books[i]['imagePath'] == updatedBook['imagePath']) {
+          books[i] = updatedBook;
+          break;
+        }
+      }
+
+      _storage.write('books', books);
+    }
+  }
+  
 //   static bool saveData(String key, Map value) {
 //     _storage.write(key, value);
 //     return true;
@@ -38,5 +52,5 @@ class StorageManager{
   // static void deleteData(String key) {
   //   _storage.remove(key);
   // }
-}
+
 

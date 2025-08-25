@@ -2,25 +2,12 @@ import 'package:bookapp/colors.dart';
 import 'package:bookapp/home.dart';
 import 'package:bookapp/library_screen.dart';
 import 'package:bookapp/local_storage.dart';
+import 'package:bookapp/models.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class Book {
-  final String title;
-  final String author;
-  final String type;
-  final File image;
-  final Color color;
 
-  Book({
-    required this.title,
-    required this.author,
-    required this.type,
-    required this.image,
-    required this.color,
-  });
-}
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -36,16 +23,7 @@ class _AddScreenState extends State<AddScreen> {
   File? _selectedImage;
   final List<Book> books = [];
   Color? _selectedColor;
-  final List<Color> _availableColors = [
-  const Color(0xffE7B3B3),
-  const Color(0xff91B6CD),
-  const Color(0xff8D8CB3),
-  const Color(0xffE6C9DD),
-  const Color(0xffEAE5CF),
-  const Color(0xffC3E8C5),
-  const Color(0xff97B7C5),
-
-];
+  final List<Color> _availableColors = Appcolors.bookColors;
   
 
  void _saveBook() {
@@ -154,7 +132,7 @@ class _AddScreenState extends State<AddScreen> {
                   const Text(
                     "Upload Photo Cover:",
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: Appcolors.black,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -167,7 +145,7 @@ class _AddScreenState extends State<AddScreen> {
                   const Text(
                     "Choose a Color:",
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: Appcolors.black,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -214,7 +192,7 @@ class _AddScreenState extends State<AddScreen> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Appcolors.white,
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:bookapp/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 // ignore: unused_import
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
+        colorSchemeSeed: Appcolors.dustyBlue,
       ),
       home: const LoginScreen(), 
     );
